@@ -64,4 +64,3 @@ const images = [
   },
 ];
 
-const { preview, original, description } = images;
