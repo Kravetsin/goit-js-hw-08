@@ -64,3 +64,46 @@ const images = [
   },
 ];
 
+const gallery = document.querySelector(".gallery");
+
+gallery.addEventListener("click", (event) => {
+  const linkEl = event.target.closest("a.gallery-link");
+  // if (!linkEl) return;
+
+  event.preventDefault();
+
+  const largeImageURL = linkEl.href;
+
+  const instance = basicLightbox.create(`
+    <img src="${largeImageURL}" alt="" />
+  `);
+  instance.show();
+});
+
+function createGallery(container, items) {
+  const fragment = document.createDocumentFragment();
+
+  items.forEach(({ preview, original, description }) => {
+    const li = document.createElement("li");
+    li.classList.add("gallery-item");
+
+    const link = document.createElement("a");
+    link.classList.add("gallery-link");
+    link.href = original;
+
+    const img = document.createElement("img");
+    img.classList.add("gallery-image");
+    img.src = preview;
+    img.dataset.source = original;
+    img.alt = description;
+
+    link.appendChild(img);
+    li.appendChild(link);
+
+    fragment.appendChild(li);
+  });
+
+  container.appendChild(fragment);
+}
+
+createGallery(gallery, images);
