@@ -67,15 +67,14 @@ const images = [
 const gallery = document.querySelector(".gallery");
 
 gallery.addEventListener("click", (event) => {
-  const linkEl = event.target.closest("a.gallery-link");
-  // if (!linkEl) return;
+  if (event.target.nodeName !== "IMG") return;
 
   event.preventDefault();
 
-  const largeImageURL = linkEl.href;
+  const largeImageURL = event.target.dataset.source;
 
   const instance = basicLightbox.create(`
-    <img src="${largeImageURL}" alt="" />
+    <img src="${largeImageURL}" alt="${event.target.alt}" />
   `);
   instance.show();
 });
